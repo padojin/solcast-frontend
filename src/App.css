@@ -1,0 +1,77 @@
+.App {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+h2 {
+  color: #333;
+}
+
+form {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+input[type="file"] {
+  padding: 5px;
+}
+
+button {
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.file-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.file-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.file-item:hover {
+  background-color: #f0f0f0;
+}
+
+.file-name {
+  color: #1a0dab;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+span.file-name:hover {
+  text-decoration: underline;
+}
+
+.file-preview {
+  margin-top: 20px;
+}
+
+.file-preview video,
+.file-preview img {
+  max-width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+}
