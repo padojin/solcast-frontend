@@ -8,8 +8,11 @@ function App() {
   const [previewFile, setPreviewFile] = useState(null);
   const [previewType, setPreviewType] = useState('');
 
+  const backendUrl = 'http://43.203.196.10:3000';
+
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
+    console.log('Selected file:', event.target.files[0]); // Debugging log
   };
 
   const handleFileUpload = async (event) => {
@@ -18,11 +21,12 @@ function App() {
     formData.append('file', selectedFile);
 
     try {
-      await axios.post('http://localhost:3000/upload', formData, {
+      const response = await axios.post(`${backendUrl}/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
+      console.log('Upload response:', response.data); // Debugging log
       alert('File uploaded successfully');
       fetchFileList();
     } catch (error) {
@@ -33,7 +37,8 @@ function App() {
 
   const fetchFileList = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/file-list');
+      const response = await axios.get(`${backendUrl}/file-list`);
+      console.log('File list response:', response.data); // Debugging log
       setFileList(response.data);
     } catch (error) {
       console.error('Error fetching file list:', error);
@@ -42,9 +47,10 @@ function App() {
 
   const handleFileClick = async (file) => {
     try {
-      const response = await axios.get(`http://localhost:3000/file-url/${encodeURIComponent(file)}`);
+      console.log('Clicked file:', file); // Debugging log
+      const response = await axios.get(`${backendUrl}/file-url/${encodeURIComponent(file)}`);
       const url = response.data.url;
-      console.log('File URL:', url); // Debugging line
+      console.log('File URL:', url); // Debugging log
 
       if (/\.(mp4|webm|ogg)$/i.test(file)) {
         setPreviewType('video');
