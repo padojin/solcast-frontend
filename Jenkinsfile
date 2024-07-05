@@ -9,6 +9,11 @@ pipeline {
    }
 
     stages {
+          stage('Install zip') {
+            steps {
+                sh 'sudo apt-get update && sudo apt-get install -y zip'
+            }
+        }
         stage('Checkout') {
             steps {
                 git 'https://github.com/padojin/solcast-frontend.git'
