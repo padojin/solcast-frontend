@@ -8,11 +8,45 @@ DOCKER_CONTAINER="solcast-frontend"
 AWS_REGION="ap-northeast-2"
 AWS_ACCOUNT_ID="905418205568"
 
-# UUID 생성
-IMAGE_TAG=$(uuidgen)
-
 # 로그 파일 초기화
 echo "Deployment started at $(date)" > $LOG_FILE
+
+# 배포 디렉토리로 이동
+cd ${DEPLOY_DIR}
+
+# npm 및 Node.js 설치 확인
+echo "Checking for Node.js and npm..." >> $LOG_FILE
+if ! command -v node &> /dev/null
+then
+    echo "Node.js not found, installing..." >> $LOG_FILE
+    curl -sL https://rpm.nodesource.com/setup_18.x | sudo -E bash - >> $LOG_FILE
+    sudo yum install -y nodejs >> $LOG_FILE
+else
+    echo "Node.js found: $(node -v)" >> $LOG_FILE
+fi
+
+if ! command -v npm &> /dev/null
+then
+    echo "npm not found, installing..." >> $LOG_FILE
+    sudo yum install -y npm >> $LOG_FILE
+else
+    echo "npm found: $(npm -v)" >> $LOG_FILE
+fi
+
+# node_modules 디렉토리 삭제
+echo "Removing node_modules directory..." >> $LOG_FILE
+rm -rf node_modules
+
+# npm install 실행
+echo "Installing dependencies..." >> $LOG_FILE
+npm install >> $LOG_FILE 2>&1
+if [ $? -ne 0 ]; then
+    echo "npm install failed" >> $LOG_FILE
+    exit 1
+fi
+
+# UUID 생성
+IMAGE_TAG=$(uuidgen)
 
 # Docker 로그인
 echo "Logging in to Amazon ECR..." >> $LOG_FILE
@@ -28,13 +62,6 @@ if [ $(docker ps -a -q -f name=$DOCKER_CONTAINER) ]; then
     docker stop $DOCKER_CONTAINER
     docker rm $DOCKER_CONTAINER
 fi
-
-# 배포 디렉토리로 이동
-cd ${DEPLOY_DIR}
-
-# node_modules 디렉토리 삭제
-echo "Removing node_modules directory..." >> $LOG_FILE
-rm -rf node_modules
 
 # Docker 이미지 빌드
 echo "Building Docker image..." >> $LOG_FILE
