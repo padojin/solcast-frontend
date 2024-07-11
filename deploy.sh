@@ -63,7 +63,7 @@ fi
 
 # Docker 컨테이너 실행
 echo "Starting Docker container..." >> $LOG_FILE
-docker run -d -p 80:3000 --name $DOCKER_CONTAINER $ECR_IMAGE_URI >> $LOG_FILE 2>&1
+docker run -d -p 80:8080 --name $DOCKER_CONTAINER $ECR_IMAGE_URI >> $LOG_FILE 2>&1
 if [ $? -ne 0 ]; then
     echo "Docker container failed to start" >> $LOG_FILE
     exit 1
