@@ -97,3 +97,13 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "Deployment completed at $(date)" >> $LOG_FILE
+
+# 필요 없는 Docker 이미지 삭제
+echo "Removing old Docker images..." >> $LOG_FILE
+docker images -f "dangling=true" -q | xargs -r docker rmi >> $LOG_FILE 2>&1
+if [ $? -ne 0 ]; then
+    echo "Docker image removal failed" >> $LOG_FILE
+    exit 1
+fi
+
+echo "Cleanup completed at $(date)" >> $LOG_FILE
