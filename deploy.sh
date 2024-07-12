@@ -45,8 +45,8 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-# UUID 생성
-IMAGE_TAG=$(uuidgen)
+# 배포 날짜와 시간 포함 이미지 태그 생성
+IMAGE_TAG=$(date +'%Y%m%d%H%M%S')
 
 # Docker 로그인
 echo "Logging in to Amazon ECR..." >> $LOG_FILE
@@ -62,6 +62,16 @@ if [ $(docker ps -a -q -f name=$DOCKER_CONTAINER) ]; then
     docker stop $DOCKER_CONTAINER
     docker rm $DOCKER_CONTAINER
 fi
+
+# 기존 Docker 이미지 제거
+echo "Removing old Docker images..." >> $LOG_FILE
+EXISTING_IMAGE_IDS=$(docker images --filter=reference="$DOCKER_IMAGE:*" --format "{{.ID}}")
+for IMAGE_ID in $EXISTING_IMAGE_IDS; do
+    docker rmi -f $IMAGE_ID >> $LOG_FILE 2>&1
+    if [ $? -ne 0 ]; then
+        echo "Failed to remove Docker image with ID $IMAGE_ID" >> $LOG_FILE
+    fi
+done
 
 # Docker 이미지 빌드
 echo "Building Docker image..." >> $LOG_FILE
@@ -97,13 +107,3 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "Deployment completed at $(date)" >> $LOG_FILE
-
-# 필요 없는 Docker 이미지 삭제
-echo "Removing old Docker images..." >> $LOG_FILE
-docker images -f "dangling=true" -q | xargs -r docker rmi >> $LOG_FILE 2>&1
-if [ $? -ne 0 ]; then
-    echo "Docker image removal failed" >> $LOG_FILE
-    exit 1
-fi
-
-echo "Cleanup completed at $(date)" >> $LOG_FILE
