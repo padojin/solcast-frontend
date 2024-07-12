@@ -44,7 +44,7 @@ pipeline {
                     credentials: 'awsAccessKey', 
                     deploymentConfig: 'CodeDeployDefault.OneAtATime', 
                     deploymentGroupAppspec: false, 
-                    deploymentGroupName: 'solcast-cicd-frontend-group', 
+                    deploymentGroupName: 'solcast-web-deploy', 
                     excludes: '', 
                     iamRoleArn: '', 
                     includes: '**', 
