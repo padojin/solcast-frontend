@@ -46,7 +46,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # 배포 날짜와 시간 포함 이미지 태그 생성
-IMAGE_TAG=$(date +'%Y%m%d%H%M%S')
+IMAGE_TAG=$(date +'%Y-%m-%d-%H-%M-%S')
 
 # Docker 로그인
 echo "Logging in to Amazon ECR..." >> $LOG_FILE
