@@ -1,5 +1,5 @@
 <template>
-  <div class="board-list">
+  <div class="main-list">
     <div class="common-buttons">
       <button type="button" class="w3-button w3-round w3-blue-gray" v-on:click="fnWrite">등록</button>
     </div>
@@ -7,28 +7,20 @@
       <thead>
       <tr>
         <th>No</th>
-        <th>썸네일</th>
         <th>제목</th>
+        <!-- <th>강의</th> -->
         <th>강사명</th>
-        <th>상세내역</th>
-        <th>작성일</th>
       </tr>
       </thead>
       <tbody>
-      <tr v-for="(row, board_no) in list" :key="board_no">
-        <td><a v-on:click="fnView(`${row.board_no}`)">{{ row.board_no }}</a></td>
-        <td>
+      <tr v-for="(row, main_no) in list" :key="main_no">
+        <td><a v-on:click="fnView(`${row.main_no}`)">{{ row.main_no }}</a></td>
+                <!-- <td>
           <img v-if="row.thumbnail_url" :src="row.thumbnail_url" alt="썸네일 이미지" width="100">
           <div v-else style="width: 100px; height: 75px; background-color: #f0f0f0;"></div>
-        </td>
-        <!-- <td>
-          <img v-if="row.file_url" :src="row.file_url" alt="동영상 이미지" width="100">
-          <div v-else style="width: 100px; height: 75px; background-color: #f0f0f0;"></div>
         </td> -->
-        <td><a v-on:click="fnView(`${row.board_no}`)">{{ row.board_title }}</a></td>
-        <td><a v-on:click="fnView(`${row.board_no}`)">{{ row.board_teacher }}</a></td>
-        <td><a v-on:click="fnView(`${row.board_no}`)">{{ row.board_memo }}</a></td>
-        <td><a v-on:click="fnView(`${row.board_no}`)">{{ row.board_CDT }}</a></td>
+        <td><a v-on:click="fnView(`${row.main_no}`)">{{ row.main_title }}</a></td>
+        <td><a v-on:click="fnView(`${row.main_no}`)">{{ row.main_author }}</a></td>
       </tr>
       </tbody>
     </table>
@@ -56,7 +48,7 @@ export default {
         size: this.size
       }
 
-      this.$axios.get(this.$serverUrl + "/board/list", {
+      this.$axios.get(this.$serverUrl + "/main/list", {
         params: this.requestBody,
         headers: {}
       }).then((res) => {      
@@ -70,7 +62,7 @@ export default {
       })
     },
     fnView(idx) {
-      this.requestBody.boardNo = idx
+      this.requestBody.mainNo = idx
       this.$router.push({
         path: './detail',
         query: this.requestBody

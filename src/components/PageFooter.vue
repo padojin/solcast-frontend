@@ -2,8 +2,8 @@
 <template>
   <hr/>
   <footer>
-    <router-link to="/">Home</router-link> |
-        <router-link to="/signin">회원 가입</router-link> |
+    <!-- <router-link to="/test">파일 업로드</router-link> | -->
+        <!-- <router-link to="/signin">회원 가입</router-link> | -->
         <router-link to="/board/list">게시판</router-link>        |
         <a href="https://github.com/oneEunji/vue-front" target="_blank" rel="noopener">GitHub_front</a> |
         <a href="https://github.com/padojin/solcast-backend" target="_blank" rel="noopener">GitHub_back</a> |
