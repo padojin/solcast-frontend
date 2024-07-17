@@ -29,7 +29,7 @@ pipeline {
       stage('Upload S3') {
           steps {
               echo 'Upload S3'
-              withAWS(credentials: '4b19d56f-8b5a-4249-a934-b669519977e7') {
+              withAWS(credentials: 'cf4bc89a-8b0d-4150-a678-f6f5f89f8327') {
                   s3Upload(file: 'frontend.zip', bucket: 'solcast-frontend-bucket', path: "${S3PATH}/frontend.zip")
               }
           }
@@ -42,7 +42,7 @@ pipeline {
                     awsAccessKey: 'AKIA5FTZBNGAD22XVD4M', 
                     awsSecretKey: AWS_SECRET_ACCESS_KEY, 
                     credentials: 'awsAccessKey', 
-                    deploymentConfig: 'CodeDeployDefault.OneAtATime', 
+                    deploymentConfig: 'CodeDeployDefault.AllAtATime', 
                     deploymentGroupAppspec: false, 
                     deploymentGroupName: 'solcast-web-deploy', 
                     excludes: '', 
