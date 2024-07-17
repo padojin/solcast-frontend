@@ -42,7 +42,7 @@ pipeline {
                     awsAccessKey: 'AKIA5FTZBNGAD22XVD4M', 
                     awsSecretKey: AWS_SECRET_ACCESS_KEY, 
                     credentials: 'awsAccessKey', 
-                    deploymentConfig: 'CodeDeployDefault.AllAtATime', 
+                    deploymentConfig: 'CodeDeployDefault.AllAtOnce', 
                     deploymentGroupAppspec: false, 
                     deploymentGroupName: 'solcast-web-deploy', 
                     excludes: '', 
