@@ -33,6 +33,10 @@ then
 else
     echo "npm found: $(npm -v)" >> $LOG_FILE
 fi
+#docker compose 설치
+sudo curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose >> $LOG_FILE
+sudo chmod +x /usr/local/bin/docker-compose
+docker-compose version >> $LOG_FILE
 
 # node_modules 디렉토리 삭제
 echo "Removing node_modules directory..." >> $LOG_FILE
