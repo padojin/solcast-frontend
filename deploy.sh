@@ -98,11 +98,33 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-# Docker 컨테이너 실행
-echo "Starting Docker container..." >> $LOG_FILE
-docker run -d -p 80:8080 --name $DOCKER_CONTAINER $ECR_IMAGE_URI >> $LOG_FILE 2>&1
+echo "Creating docker-compose.yml file..." >> $LOG_FILE
+cat > docker-compose.yml <<EOL
+version: '3.8'
+
+services:
+  frontend1:
+    image: $ECR_IMAGE_URI
+    container_name: solcast-frontend1
+    ports:
+      - "8080:8080"
+  frontend2:
+    image: $ECR_IMAGE_URI
+    container_name: solcast-frontend2
+    ports:
+      - "8081:8080"
+  frontend3:
+    image: $ECR_IMAGE_URI
+    container_name: solcast-frontend3
+    ports:
+      - "8082:8080"
+EOL
+
+# Docker Compose 실행
+echo "Starting Docker Compose services..." >> $LOG_FILE
+docker-compose up -d >> $LOG_FILE 2>&1
 if [ $? -ne 0 ]; then
-    echo "Docker container failed to start" >> $LOG_FILE
+    echo "Docker Compose services failed to start" >> $LOG_FILE
     exit 1
 fi
 
