@@ -16,11 +16,11 @@ pipeline {
          }
       }
 
-      stage('Install dependencies') {
-          steps {
-              sh 'npm ci'
-          }
-      }
+      // stage('Install dependencies') {
+      //     steps {
+      //         sh 'npm ci'
+      //     }
+      // }
       stage('Create Zip Archive') {
           steps {
               sh 'zip -r frontend.zip . -x "node_modules/*" -x ".git/*"'
