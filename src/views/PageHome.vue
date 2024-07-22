@@ -2,7 +2,7 @@
 <template>
     <div class="home">
       <img alt="logo" src="../assets/logo.png">
-      <HelloWorld msg="Solcast CI/CD Test"/>
+      <HelloWorld msg="Solcast"/>
     </div>
   </template>
   
