@@ -112,7 +112,7 @@ services:
     image: $ECR_IMAGE_URI
     container_name: solcast-frontend1
     ports:
-      - "8080:8080"
+      - "80:8080"
   frontend2:
     image: $ECR_IMAGE_URI
     container_name: solcast-frontend2
